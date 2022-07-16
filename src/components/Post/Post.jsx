@@ -6,12 +6,12 @@ export function Post() {
       <header>
         <div className={styles.author}>
           <img
-            src="https://avatars.githubusercontent.com/u/12676148?v=4"
+            src="https://scontent.ffor33-1.fna.fbcdn.net/v/t39.30808-6/281784946_5201937996511100_4649550361815419009_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeHxw1KierwcGJCwhNtCOsWCgqKkQF6wBdCCoqRAXrAF0LmqKVRegGyZ5fKjHE2R3-Q3Koh8995DHtZmDN72gJ4T&_nc_ohc=FLWIw6XfTy4AX9VIq2U&tn=ZauXXhvKB-dSNopJ&_nc_ht=scontent.ffor33-1.fna&oh=00_AT8xsWILcPBicl_tSXXzl3YL_2eSD8zqiTO_V8RRhHisfQ&oe=62D6DC50"
             alt=""
           />
           <div className={styles.authorInfo}>
-            <strong>Vander Lima</strong>
-            <span>Tech leader</span>
+            <strong>Pingui triste</strong>
+            <span>Tech</span>
           </div>
         </div>
 
@@ -24,13 +24,15 @@ export function Post() {
       </header>
 
       <div className={styles.content}>
-        <p>Fala galeraa 👋</p>
-        <p>Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀</p>
+        <p>Olá 👋</p>
+        <p>Acabei de descer de elo no tft. É um cenario bem caotico. Só consigo vencer com comp de astral mage 🚀</p>
         <p>
-          <a href="">👉 jane.design/doctorcare</a>
+          👉<a href="#">{' '}Jovem 3030</a>
         </p>
         <p>
-          <a href="">#novoprojeto #nlw #rocketseat</a>
+          <a href="#">#tft</a>{' '}
+          <a href="#">#astralmage</a>{' '}
+          <a href="#">#ouroiv</a>
         </p>
       </div>
     </article >
