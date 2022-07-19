@@ -18,14 +18,14 @@ export function Comment() {
                 Cerca de 2h atrás
               </time>
 
-              <button
-                title='Deletar comentário'
-              >
-                <Trash
-                  size={20}
-                />
-              </button>
             </div>
+            <button
+              title='Deletar comentário'
+            >
+              <Trash
+                size={24}
+              />
+            </button>
           </header>
           <p>MUito bom Devon, parabéns!!</p>
         </div>
