@@ -1,41 +1,61 @@
+import { format, formatDistanceToNow } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
+
 import { Avatar } from '../Avatar/Avatar'
 import { Comment } from '../Comment/Comment'
 import styles from './Post.module.css'
 
-export function Post() {
+export function Post({ author, content, publishedAt }) {
+  const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
+    locale: ptBR
+  });
+
+  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+    locale: ptBR,
+    addSuffix: true
+  })
+
+  // new Intl.DateTimeFormat('pt-BR', {
+  //   day: '2-digit',
+  //   month: 'long',
+  //   hour: '2-digit',
+  //   minute: '2-digit'
+  // }).format(publishedAt)
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
           <Avatar
-            src="https://scontent.ffor33-1.fna.fbcdn.net/v/t39.30808-6/281784946_5201937996511100_4649550361815419009_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeHxw1KierwcGJCwhNtCOsWCgqKkQF6wBdCCoqRAXrAF0LmqKVRegGyZ5fKjHE2R3-Q3Koh8995DHtZmDN72gJ4T&_nc_ohc=FLWIw6XfTy4AX9VIq2U&tn=ZauXXhvKB-dSNopJ&_nc_ht=scontent.ffor33-1.fna&oh=00_AT8xsWILcPBicl_tSXXzl3YL_2eSD8zqiTO_V8RRhHisfQ&oe=62D6DC50"
+            src={author.avatarUrl}
             alt=""
           />
           <div className={styles.authorInfo}>
-            <strong>Pingui triste</strong>
-            <span>Tech</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
 
         <time
-          title='16 de julho ás 1:20'
-          dateTime='2022-07-16 1:30'
+          title={publishedDateFormatted}
+          dateTime={publishedAt.toISOString()}
         >
-          Publicado há 1h
+          {publishedDateRelativeToNow}
         </time>
       </header>
 
       <div className={styles.content}>
-        <p>Olá 👋</p>
-        <p>Acabei de descer de elo no tft. É um cenario bem caotico. Só consigo vencer com comp de astral mage 🚀</p>
-        <p>
-          👉<a href="#">{' '}Jovem 3030</a>
-        </p>
-        <p>
-          <a href="#">#tft</a>{' '}
-          <a href="#">#astralmage</a>{' '}
-          <a href="#">#ouroiv</a>
-        </p>
+        {content.map(line => {
+          if (line.type === 'paragraph') {
+            return <p>{line.content}</p>
+          } else if (line.type === 'link') {
+            return (
+              <p>
+                <a href="#">{line.content}</a>
+              </p>
+            )
+          }
+        })}
       </div>
 
       <form className={styles.commentForm}>
