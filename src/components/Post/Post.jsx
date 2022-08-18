@@ -22,20 +22,36 @@ export function Post({ author, content, publishedAt }) {
   function handleCreateNewComment(event) {
     event.preventDefault();
 
+    const commentsDuplicate = comments.find(comment => {
+      return newCommentText === comment;
+    })
+
+    if (commentsDuplicate) {
+      window.confirm('Comentario duplicado ok? ')
+      return;
+    }
+
     setComments([...comments, newCommentText])
     setNewCommentText('');
   }
 
   function handleNewCommentChange(event) {
+    event.target.setCustomValidity('')
     setNewCommentText(event.target.value)
+  }
+
+  function handleNewCommentInvalid(event) {
+    event.target.setCustomValidity('Aqui é obrigatorio, ok?')
   }
 
   function deleteComment(commentToDelete) {
     const commentsWithoutDeletedOne = comments.filter(comment => {
       return comment !== commentToDelete;
     })
-    setComments()
+    setComments(commentsWithoutDeletedOne)
   }
+
+  const isNewCommentEmpty = newCommentText.length === 0;
 
   return (
     <article className={styles.post}>
@@ -84,10 +100,13 @@ export function Post({ author, content, publishedAt }) {
           name="comment"
           value={newCommentText}
           onChange={handleNewCommentChange}
+          onInvalid={handleNewCommentInvalid}
+          required
         />
 
         <footer>
           <button
+            disabled={isNewCommentEmpty}
             type='submit'
           >
             Publicar
