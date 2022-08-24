@@ -1,14 +1,31 @@
 import { format, formatDistanceToNow } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
-import { useState } from 'react'
+import { useState, FormEvent, ChangeEvent, InvalidEvent } from 'react'
 
 import { Avatar } from '../Avatar/Avatar'
 import { Comment } from '../Comment/Comment'
 import styles from './Post.module.css'
 
-export function Post({ author, content, publishedAt }) {
-  const [comments, setComments] = useState([]);
-  const [newCommentText, setNewCommentText] = useState('');
+interface IAuthor {
+  name: string;
+  role: string;
+  avatarUrl: string;
+}
+
+interface IContent {
+  type: 'link' | 'paragraph';
+  content: string;
+}
+
+interface PostProps {
+  author: IAuthor;
+  publishedAt: Date;
+  content: IContent[];
+}
+
+export function Post({ author, content, publishedAt }: PostProps) {
+  const [comments, setComments] = useState<string[]>([]);
+  const [newCommentText, setNewCommentText] = useState<string>('');
 
   const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
     locale: ptBR
@@ -19,7 +36,7 @@ export function Post({ author, content, publishedAt }) {
     addSuffix: true
   })
 
-  function handleCreateNewComment(event) {
+  function handleCreateNewComment(event: FormEvent) {
     event.preventDefault();
 
     const commentsDuplicate = comments.find(comment => {
@@ -35,16 +52,16 @@ export function Post({ author, content, publishedAt }) {
     setNewCommentText('');
   }
 
-  function handleNewCommentChange(event) {
+  function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity('')
     setNewCommentText(event.target.value)
   }
 
-  function handleNewCommentInvalid(event) {
+  function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity('Aqui é obrigatorio, ok?')
   }
 
-  function deleteComment(commentToDelete) {
+  function deleteComment(commentToDelete: string) {
     const commentsWithoutDeletedOne = comments.filter(comment => {
       return comment !== commentToDelete;
     })
@@ -59,7 +76,6 @@ export function Post({ author, content, publishedAt }) {
         <div className={styles.author}>
           <Avatar
             src={author.avatarUrl}
-            alt=""
           />
           <div className={styles.authorInfo}>
             <strong>{author.name}</strong>
